@@ -32,7 +32,10 @@ public class RentACar {
         int telefono = scanner.nextInt();
         System.out.print("Código: ");
         double codigo = scanner.nextDouble();
-        
+       
+        // Crear objeto de cliente con los datos ingresados
+        Cliente cliente = new Cliente(dni, nombre, direccion, telefono, codigo);
+
         
          // Solicitar la duración de la renta o la fecha de devolución
         System.out.println("Seleccione una opción:");
@@ -43,20 +46,23 @@ public class RentACar {
         
         
         LocalDate fechaFinal;
+         Renta reservaCliente =null;
         if (opcion == 1) {
             System.out.print("Duración de la renta en días: ");
             int duracion = scanner.nextInt();
-            fechaFinal = LocalDate.now().plusDays(duracion);
+           // fechaFinal = LocalDate.now().plusDays(duracion);
+            // Crear objeto de reserva para el cliente
+         reservaCliente = new Renta(5, cliente);
         } else {
             System.out.print("Fecha de devolución (formato: dd/MM/yyyy): ");
             String fechaString = scanner.nextLine();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             fechaFinal = LocalDate.parse(fechaString, formatter);
+            // Crear objeto de reserva para el cliente
+         reservaCliente = new Renta(formatter, cliente);
         }
 
-        // Crear objeto de cliente con los datos ingresados
-        Cliente cliente = new Cliente(dni, nombre, direccion, telefono, codigo);
-
+       
         // Mostrar opciones de autos disponibles
         System.out.println("Autos disponibles:");
         for (int i = 0; i < autosDisponibles.size(); i++) {
@@ -71,14 +77,14 @@ public class RentACar {
         // Obtener el auto elegido por el usuario
         Auto autoElegido = autosDisponibles.get(opcionAuto - 1);
 
-        // Crear objeto de reserva para el cliente
-        Renta reservaCliente = new Renta(5, 1, cliente);
-        reservaCliente.setFechaInicio(LocalDate.now());
-        reservaCliente.setFechaFinal(fechaFinal);
+        
+   /*     reservaCliente.setFechaInicio(LocalDate.now());
+        reservaCliente.setFechaFinal(fechaFinal);*/
+        
         reservaCliente.addAutos(autoElegido);
 
         // Calcular precio total de la reserva
-        double precioTotal = autoElegido.getPrecio();
+       // double precioTotal = autoElegido.getPrecio();
 
         // Imprimir comprobante de reserva
         System.out.println("COMPROBANTE DE RESERVA");
@@ -90,7 +96,7 @@ public class RentACar {
         System.out.println("Fecha de fin: " + reservaCliente.getFechaFinal());
         System.out.println("Auto alquilado:");
         System.out.println("- " + autoElegido.getMarca() + " " + autoElegido.getModelo() + " (" + autoElegido.getMatricula() + ")");
-        System.out.println("Precio total: $ " + precioTotal + " Dólares ");
+        System.out.println("Precio total: $ " + reservaCliente.calcularImporteTot() + " Dólares ");
 
         scanner.close();
     }
