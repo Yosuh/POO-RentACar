@@ -14,12 +14,16 @@ public class Renta {
     private LocalDate fechaFinal;
     private ArrayList<Auto> auto;
 
-    public Renta(int cantDias, int nroReserva, Cliente cli) {
+    public Renta(int cantDias,  Cliente cli) {
         this.cantDias = cantDias;
-        this.nroReserva = nroReserva;
+        this.nroReserva = Renta.cantReservas ++;
+       this.fechaFinal=calcularFechaFin();
         this.cli = cli;
 }
+//falta otro constructor con fecha de fin y NO recibe cant de días
 
+// falta el método calcular el total a pagar
+   
     public int getCantDias() {
         return cantDias;
     }
@@ -78,6 +82,7 @@ public class Renta {
       public void addAutos(Auto a) {
        this.auto.add(a);
     }
+   
 }
 
     
