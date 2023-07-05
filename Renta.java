@@ -23,6 +23,7 @@ public class Renta {
 //falta otro constructor con fecha de fin y NO recibe cant de días
 
 // falta el método calcular el total a pagar
+// falta imprimir ticket
    
     public int getCantDias() {
         return cantDias;
