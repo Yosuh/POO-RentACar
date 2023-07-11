@@ -1,30 +1,55 @@
-
-
 package rentacar;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Renta {
    
-    private int cantDias;
+   private int cantDias;
     private int nroReserva;
     private static int cantReservas;
     private Cliente cli;
-    private LocalDate fechaInicio= LocalDate.now();
+    private LocalDate fechaInicio = LocalDate.now();
     private LocalDate fechaFinal;
     private ArrayList<Auto> auto;
 
-    public Renta(int cantDias,  Cliente cli) {
+    public Renta(int cantDias, Cliente cli) {
         this.cantDias = cantDias;
-        this.nroReserva = Renta.cantReservas ++;
-       this.fechaFinal=calcularFechaFin();
+        this.nroReserva = Renta.cantReservas++;
+        this.fechaFinal = calcularFechaFin();
         this.cli = cli;
-}
-//falta otro constructor con fecha de fin y NO recibe cant de días
+        this.auto = new ArrayList<>();
+    }
 
-// falta el método calcular el total a pagar
-// falta imprimir ticket: recorre el array de autos y le pide el método toString()
-   
+    public Renta(int cantDias, Cliente cli, LocalDate fechaFinal) {
+        this.cantDias = cantDias;
+        this.nroReserva = Renta.cantReservas++;
+        this.fechaFinal = fechaFinal;
+        this.cli = cli;
+        this.auto = new ArrayList<>();
+    }
+
+    public double calcularTotalPagar() {
+        double total = 0.0;
+        for (Auto a : auto) {
+            total += a.getPrecioAlquiler();
+        }
+        return total;
+    }
+
+    public void imprimirTicket() {
+        System.out.println("----- Ticket de Renta -----");
+        System.out.println("Número de Reserva: " + nroReserva);
+        System.out.println("Cliente: " + cli.getNombre());
+        System.out.println("Fecha de Inicio: " + fechaInicio);
+        System.out.println("Fecha Final: " + fechaFinal);
+        System.out.println("Autos alquilados:");
+        for (Auto a : auto) {
+            System.out.println(a.toString());
+        }
+        System.out.println("Total a pagar: " + calcularTotalPagar());
+        System.out.println("---------------------------");
+    }
+
     public int getCantDias() {
         return cantDias;
     }
@@ -80,14 +105,12 @@ public class Renta {
     public void setAuto(ArrayList<Auto> auto) {
         this.auto = auto;
     }
-      public void addAutos(Auto a) {
-       this.auto.add(a);
+
+    public void addAutos(Auto a) {
+        this.auto.add(a);
     }
    
 }
-
-    
-
 
     
 
